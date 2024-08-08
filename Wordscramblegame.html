@@ -1,0 +1,162 @@
+<!--index.html-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, 
+				initial-scale=1.0" />
+    <title>word scramble</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* style.css */
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWatr7uUjsDLSBpphOyHUHsgidlsgH1dfZ4A&s);
+            align-items: center;
+            background-repeat: no-repeat;
+            min-height: 50vh;
+            background-size: cover;
+        }
+
+        .root {
+            font-size: x-large;
+            color: whitesmoke;
+            margin-top: 70px;
+            background-color: transparent;
+
+            padding: 0% 5% 1% 5%;
+            text-align: center;
+            border-radius: 5px 0;
+        }
+
+        .title {
+            border-bottom: 4px dashed;
+            border-color: white;
+        }
+
+        input {
+            font-size: 17px;
+            padding: 10px 40px;
+            /* padding-left: 10px; */
+            outline: 2px grey;
+        }
+
+
+        .foot {
+            margin-bottom: 0%;
+            display: flex;
+            width: 100%;
+        }
+
+        .foot>button {
+            width: 48%;
+            padding: 2%;
+            margin: 1%;
+            background-color: rgb(161, 14, 143);
+            border-radius: 5px;
+            color: white;
+            font-size: large;
+            border: none;
+            transition: .5s;
+        }
+
+        button:hover {
+            background-color: rgb(161, 14, 143);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="root">
+        <h1 class="title">Word Scramble Game</h1>
+        <div id="scrambled">
+            <h2 id="scrambleWord">Word</h2>
+            <p id="hint"></p>
+        </div>
+        <div id="form">
+            <input id="input" type="text" placeholder="Guess correct word" />
+        </div>
+        <h3 id="output">Result:</h3>
+        <div class="foot">
+            <button type="button" onclick="check()">
+                Check
+            </button>
+            <button type="button" onclick="refresh()">
+                Refresh
+            </button>
+        </div>
+        <script>
+            // script.js 
+
+            const words = [
+                "react",
+                "angular",
+                "javascript",
+                "bootstrap",
+                "tailwind",
+            ];
+
+            // Respective list of hints 
+            const hints = [
+                "JavaScript framework",
+                "JavaScript Framework",
+                "Scripting Language",
+                "Styling Library",
+                "Styling Library",
+            ];
+
+            // Initialize display word 
+            let displayWord = "";
+
+            // Function to shuffle letters 
+            function shuffle(str) {
+                strArray = Array.from(str);
+                for (let i = 0; i < strArray.length - 1; ++i) {
+                    let j = Math.floor(Math.random() * strArray.length);
+                    // Swap letters 
+                    let temp = strArray[i];
+                    strArray[i] = strArray[j];
+                    strArray[j] = temp;
+                }
+                return strArray.join(" ");
+            }
+
+            // Function to check input and display result 
+            function check() {
+                let input = document.getElementById("input");
+                let output = document.getElementById("output");
+                if (
+                    input.value.toLocaleLowerCase() ===
+                    displayWord.toLocaleLowerCase()
+                )
+                    output.innerHTML = "Result: Correct";
+                else output.innerHTML = "Result: Incorrect";
+            }
+
+            // To refresh and show new word 
+            function refresh() {
+                index = Math.floor(Math.random() * 5);
+                displayWord = words[index];
+                displayHint = hints[index];
+                scrambleWord =
+                    document.getElementById("scrambleWord");
+                scrambleWord.innerText =
+                    shuffle(displayWord).toUpperCase();
+                let hint = document.getElementById("hint");
+                hint.innerHTML = "<b>Hint:</b> " + displayHint;
+                document.getElementById("output").innerText = "Result:";
+            }
+
+            // Function call when page load for first time 
+            refresh();
+
+        </script>
+    </div>
+</body>
+
+</html>
